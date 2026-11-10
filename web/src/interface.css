@@ -1,0 +1,163 @@
+/* Shared form surfaces and restrained status markers. */
+:root {
+  color-scheme: dark;
+  --field-fill: color-mix(in srgb, var(--bg) 62%, var(--surface));
+  --field-edge: color-mix(in srgb, var(--muted) 25%, transparent);
+  --field-focus: color-mix(in srgb, var(--blue) 72%, var(--text));
+  --field-halo: color-mix(in srgb, var(--blue) 19%, transparent);
+  --status-failed: #ff9ca9;
+  --system-tone: #a6b6d2;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --field-fill: #ffffff8c;
+  --status-failed: #9e344b;
+  --system-tone: #526780;
+}
+.glass-shell :is(select, textarea, input:not([type="checkbox"], [type="range"], [type="radio"])),
+.modal :is(select, textarea, input:not([type="checkbox"], [type="range"], [type="radio"])) {
+  min-height: 40px;
+  border: 1px solid var(--field-edge);
+  border-radius: 12px;
+  background-color: var(--field-fill);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 #ffffff0f;
+  font-size: max(12px, .8rem);
+}
+.glass-shell select, .modal select {
+  appearance: none;
+  padding-right: 34px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: right 17px center, right 12px center;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+}
+select option {
+  background: var(--bg);
+  color: var(--text);
+}
+.glass-shell :is(input, select, textarea):focus,
+.modal :is(input, select, textarea):focus {
+  border-color: var(--field-focus);
+  box-shadow: 0 0 0 3px var(--field-halo);
+  outline: none;
+}
+.glass-shell .search-field {
+  min-height: 40px;
+  border-color: var(--field-edge);
+}
+.glass-shell .search-field:focus-within {
+  border-color: var(--field-focus);
+  box-shadow: 0 0 0 3px var(--field-halo);
+}
+.glass-shell .search-field input {
+  min-height: 36px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+}
+.status-badge {
+  --status-color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  padding: 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--status-color) 25%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--status-color) 9%, transparent);
+  color: var(--status-color);
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.25;
+  text-transform: capitalize;
+}
+.status-badge.ready { --status-color: var(--green); }
+.status-badge.active { --status-color: var(--blue); }
+.status-badge.failed { --status-color: var(--status-failed); }
+.status-badge:is(.active, .quiet) svg { fill: currentColor; }
+.person-status > .person-stage {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 11px;
+}
+.person-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.avatar-initials {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, var(--purple-tint), var(--surface-3));
+  color: var(--blue);
+  font: 700 1em Manrope, sans-serif;
+}
+.workspace-switch {
+  flex-shrink: 0;
+}
+.workspace-switch > button { min-width: 54px; }
+.transcript-system {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  border-left: 2px solid color-mix(in srgb, var(--system-tone) 40%, transparent);
+  border-radius: 0 8px 8px 0;
+  background: color-mix(in srgb, var(--system-tone) 7%, transparent);
+  color: var(--system-tone);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.transcript-system strong { font-size: 10px; }
+.transcript-channel { color: var(--muted); font-size: 10px; }
+.transcript-message pre {
+  overflow-x: auto;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--field-fill);
+  font-size: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.event-list article.system-event {
+  color: var(--system-tone);
+  padding-block: 10px;
+}
+.event-list .system-event :is(p, strong) { font-size: 11px; }
+
+.connections-dialog .connection-intro {
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.connections-dialog .connection-intro > div { flex: 1 1 200px; min-width: 0; }
+.connections-dialog .connection-intro p { font-size: 12px; }
+.connections-dialog .settings-content > .segmented-tabs { margin-bottom: 14px; }
+.connections-dialog .discord-token-box { margin-block: 14px; }
+.connections-dialog .form-field > small { line-height: 1.55; }
+.connections-dialog .voice-setup > .soft-note { margin: 12px 0; }
+
+@media (max-width: 580px) {
+  .floating-topbar { flex-wrap: wrap; row-gap: 7px; }
+  .workspace-switch { order: 3; width: 100%; }
+  .workspace-switch > button { flex: 1; }
+  .connections-dialog .settings-content { padding-block: 15px 18px; }
+  .connections-dialog .connection-footer > span { overflow-wrap: anywhere; }
+  .connections-dialog .connection-footer > div { flex-wrap: wrap; }
+}
+@media (forced-colors: active) {
+  .glass-shell :is(input, select, textarea):focus-visible,
+  .modal :is(input, select, textarea):focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}

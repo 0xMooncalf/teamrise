@@ -1,0 +1,386 @@
+/* Glass choice menus open above the modal's scrolling surface. */
+.glass-select {
+  display: block;
+  min-width: 0;
+}
+.glass-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 11px;
+  border: 1px solid var(--field-edge);
+  border-radius: 12px;
+  background:
+    linear-gradient(142deg, var(--surface-3), transparent),
+    var(--modal-field, var(--field-fill));
+  color: var(--text);
+  font-size: 12px;
+  text-align: left;
+}
+.glass-select-trigger > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.glass-select-trigger svg {
+  color: var(--muted);
+  transition: transform 140ms ease;
+}
+.glass-select-trigger[aria-expanded="true"] {
+  border-color: var(--field-focus);
+  box-shadow:
+    inset 0 1px 0 #ffffff24,
+    0 0 0 2px var(--field-halo);
+}
+.glass-select-trigger[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+.glass-select-trigger:disabled {
+  opacity: 0.52;
+  cursor: default;
+}
+
+.glass-select-menu {
+  --menu-fill: #122638ad;
+  --menu-rim: #b6dfff66;
+  --menu-glint: #e6f5ff54;
+  --menu-row: #b5deff0e;
+  --menu-row-edge: #c4e4ff24;
+  --menu-hover: #9fcfff35;
+  --menu-selected: #83bdff32;
+  --menu-selected-edge: #b9deff6b;
+  --menu-enter-offset: -3px;
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 7px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--menu-rim) transparent;
+  border: 1px solid var(--menu-rim);
+  border-radius: 13px;
+  background:
+    radial-gradient(ellipse at 10% 0%, var(--menu-glint), transparent 61%),
+    linear-gradient(150deg, #bce2ff12, transparent 45%, #aacdff20),
+    var(--menu-fill);
+  backdrop-filter: blur(24px) saturate(1.65);
+  color: var(--text);
+  box-shadow:
+    0 12px 28px #06121e45,
+    inset 0 1px 0 #f0faff75,
+    inset 0 -1px 0 #c0ddfa24;
+  outline: none;
+}
+:root[data-theme="light"] .glass-select-menu {
+  --menu-fill: #edf6fbc4;
+  --menu-rim: #7d9fbf85;
+  --menu-glint: #fffffff0;
+  --menu-row: #ffffff52;
+  --menu-row-edge: #7199bf36;
+  --menu-hover: #a9cced6b;
+  --menu-selected: #a8cdf68f;
+  --menu-selected-edge: #5789bc80;
+}
+.glass-select-menu[data-placement="above"] {
+  --menu-enter-offset: 3px;
+}
+.glass-select-menu:popover-open {
+  display: block;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .glass-select-menu:popover-open {
+    animation: glass-menu-in 140ms ease-out;
+  }
+}
+@keyframes glass-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--menu-enter-offset));
+  }
+}
+.glass-select-menu [role="option"] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  box-sizing: border-box;
+  min-height: 40px;
+  padding: 7px 8px;
+  border: 1px solid var(--menu-row-edge);
+  border-radius: 8px;
+  background: var(--menu-row);
+  font-size: 12px;
+  line-height: 1.35;
+  cursor: pointer;
+}
+.glass-select-menu [role="option"] + [role="option"] {
+  margin-top: 5px;
+}
+.glass-select-menu [role="option"] > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.glass-select-menu [role="option"][aria-selected="true"] {
+  border-color: var(--menu-selected-edge);
+  background: var(--menu-selected);
+  font-weight: 650;
+}
+.glass-select-menu [role="option"].active {
+  border-color: var(--menu-selected-edge);
+  background: var(--menu-hover);
+  box-shadow: inset 0 1px 0 #ffffff35;
+}
+.glass-select-menu [role="option"] > svg {
+  flex: none;
+  color: var(--blue);
+}
+.person-card-actions > .glass-select {
+  width: min(150px, 50%);
+}
+.person-card-actions .glass-select-trigger {
+  min-height: 34px;
+  font-size: 11px;
+}
+.reviewer-select > .glass-select {
+  min-width: 140px;
+}
+
+.question-card-editor {
+  margin-bottom: 24px;
+}
+.question-card-toolbar,
+.question-card-head,
+.question-card-add,
+.question-card-format {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.question-card-toolbar {
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.question-card-toolbar h3 {
+  margin: 0 0 4px;
+}
+.question-card-toolbar p,
+.question-screenshot small,
+.interview-preference-actions span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+.question-card-toolbar .status-badge {
+  flex-shrink: 0;
+}
+.question-card-stack {
+  display: grid;
+  gap: 12px;
+}
+.question-card {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--modal-rim, var(--border));
+  border-radius: 16px;
+  background:
+    linear-gradient(145deg, var(--modal-chrome, var(--surface-3)), transparent),
+    var(--surface-2);
+}
+.question-card.drop-target {
+  border-color: var(--field-focus);
+  box-shadow: 0 0 0 2px var(--field-halo);
+}
+.question-card-head {
+  margin-bottom: 12px;
+}
+.question-card-grip {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 34px;
+  border-radius: 9px;
+  color: var(--muted);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.question-card.dragging .question-card-grip {
+  cursor: grabbing;
+  color: var(--blue);
+  background: var(--hover);
+}
+.question-card-grip:hover {
+  background: var(--hover);
+}
+.question-card-controls {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+.question-card-controls .icon-button {
+  width: 32px;
+  height: 32px;
+}
+.question-card-controls .remove-card:hover {
+  color: var(--status-failed);
+}
+.question-card-format {
+  width: min(100%, 245px);
+  margin-bottom: 12px;
+  color: var(--blue);
+}
+.question-card-format > .glass-select {
+  flex: 1;
+}
+.question-card .form-field {
+  margin-bottom: 10px;
+}
+.question-card-add {
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.question-card-notes {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.question-card-notes summary {
+  cursor: pointer;
+  padding: 5px 0;
+}
+.question-card-notes label {
+  margin-top: 8px;
+}
+.question-screenshot {
+  display: grid;
+  gap: 8px;
+}
+.question-screenshot > div,
+.interview-preference-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.question-screenshot img,
+.transcript-screenshot img {
+  display: block;
+  max-width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.transcript-screenshot {
+  display: block;
+  width: fit-content;
+  margin: 8px 0;
+}
+.skill-save-message {
+  flex: 1 1 100%;
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
+}
+.interview-preferences {
+  margin-top: 18px;
+  padding: clamp(13px, 3vw, 21px);
+  border: 1px solid var(--modal-rim, var(--border));
+  border-radius: 16px;
+  background: var(--modal-chrome, var(--surface-2));
+}
+.interview-minutes input {
+  max-width: 140px !important;
+}
+.interview-clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+}
+.interview-clock.urgent {
+  color: var(--status-failed);
+}
+@media (max-width: 580px) {
+  .question-card {
+    padding: 11px;
+  }
+  .question-card-add > .button {
+    flex: 1 1 auto;
+  }
+  .interview-preferences .connection-intro > div {
+    flex: 1 1 160px;
+  }
+}
+
+.voice-summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--modal-rim, var(--border));
+  border-radius: 14px;
+  background: var(--modal-chrome, var(--surface-2));
+}
+.voice-summary-copy {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.voice-summary-icon {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--blue);
+}
+.voice-summary strong {
+  display: block;
+  font-size: 13px;
+}
+.voice-summary p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.glass-select-trigger > svg {
+  flex-shrink: 0;
+}
+
+.people-section-caption {
+  min-height: 42px;
+  color: var(--muted);
+  font-size: 11px;
+  padding-block: 8px;
+}
+.clear-candidate-filters {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  color: var(--blue);
+}
+.people-toolbar > .segmented-tabs > button {
+  font-size: 11px;
+  min-height: 36px;
+}
+.people-toolbar > .segmented-tabs {
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+@media (max-width: 780px) {
+  .people-grid {
+    grid-template-columns: 1fr;
+  }
+}

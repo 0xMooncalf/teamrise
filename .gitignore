@@ -1,0 +1,28 @@
+# Dependencies and generated frontend
+node_modules/
+web/dist/
+voice/.venv/
+voice/models/
+__pycache__/
+*.py[cod]
+
+# Local app state and credentials
+data/
+work/
+config.json
+connections.json
+.env
+.env.*
+*.jsonl
+*.pem
+*.key
+*.pfx
+
+# Builds and local diagnostics
+*.exe
+*.exe~
+*.zip
+*.log
+*.tmp
+playwright-report/
+test-results/

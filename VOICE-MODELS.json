@@ -1,0 +1,11 @@
+{
+  "asr": {
+    "repository": "Systran/faster-whisper-base.en",
+    "revision": "3d3d5dee26484f91867d81cb899cfcf72b96be6c"
+  },
+  "tts": {
+    "repository": "rhasspy/piper-voices",
+    "revision": "e7229f7d33a10e145e109b886d661984201ac3c4",
+    "voice": "en_US-ljspeech-medium"
+  }
+}

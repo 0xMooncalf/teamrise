@@ -1,0 +1,258 @@
+/* Shared glass surface and a single vertical scroll area for every dialog. */
+.modal {
+  --modal-inset: clamp(14px, 3vw, 25px);
+  --modal-available: calc(100dvh - 44px);
+  --modal-rim: #b6ddff48;
+  --modal-material: #152639a8;
+  --modal-chrome: #b8dcff0c;
+  --modal-shine: #c8e5ff27;
+  --modal-glow: #8ab9ff23;
+  --modal-scrim: #07101c38;
+  --modal-field: #122235a6;
+  box-sizing: border-box;
+  width: min(540px, calc(100% - 32px));
+  max-width: none;
+  max-height: min(860px, var(--modal-available));
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  color: var(--text);
+  border: 1px solid var(--modal-rim);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 5% 0%, var(--modal-shine), transparent 46%),
+    radial-gradient(ellipse at 100% 95%, var(--modal-glow), transparent 50%),
+    linear-gradient(145deg, #fff0 34%, #d5edff09 48%, #fff0 68%),
+    var(--modal-material);
+  box-shadow:
+    0 28px 96px #05101e64,
+    inset 0 1px 0 #ffffff64,
+    inset 1px 0 0 #d1e9ff21,
+    inset 0 -1px 0 #bddfff37;
+  backdrop-filter: blur(19px) saturate(1.6);
+  -webkit-backdrop-filter: blur(19px) saturate(1.6);
+}
+:root[data-theme="light"] .modal {
+  --modal-rim: #ffffffca;
+  --modal-material: #edf5fb9e;
+  --modal-chrome: #ffffff42;
+  --modal-shine: #ffffffc4;
+  --modal-glow: #98bdf544;
+  --modal-scrim: #57718f22;
+  --modal-field: #ffffff93;
+  box-shadow:
+    0 26px 75px #34547835,
+    inset 0 1px 0 #fff,
+    inset 0 -1px 0 #769dc84a;
+}
+.modal.wide {
+  width: min(860px, calc(100% - 32px));
+}
+.modal:has(> .modal-toolbar),
+.modal.discord-preview-dialog {
+  height: min(760px, var(--modal-available));
+}
+.modal[open] {
+  display: flex;
+  flex-direction: column;
+  animation: modal-appear 140ms ease-out;
+}
+.modal[open].closing {
+  animation: modal-disappear 150ms ease-in forwards;
+  pointer-events: none;
+}
+.modal::backdrop {
+  background: var(--modal-scrim);
+}
+@keyframes modal-appear {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes modal-disappear {
+  to {
+    opacity: 0;
+  }
+}
+
+.modal > :is(.modal-heading, .modal-toolbar, .modal-action-bar) {
+  flex: 0 0 auto;
+  min-width: 0;
+  background: var(--modal-chrome);
+}
+.modal > .modal-heading {
+  position: static;
+  padding: 13px var(--modal-inset);
+  border-color: var(--modal-rim);
+}
+.modal-heading h2 {
+  font-size: clamp(15px, 2.2vw, 18px);
+  line-height: 1.35;
+}
+.modal-heading .kicker {
+  margin-bottom: 3px;
+  color: var(--muted);
+  font-size: 8px;
+}
+.modal-heading .icon-button {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border: 1px solid var(--modal-rim);
+  border-radius: 12px;
+  background: var(--modal-chrome);
+}
+.modal-toolbar {
+  padding: 10px var(--modal-inset);
+  border-bottom: 1px solid var(--border);
+}
+.modal-toolbar > .segmented-tabs {
+  width: 100%;
+  margin: 0;
+  flex-wrap: wrap;
+  background: color-mix(in srgb, var(--modal-field) 45%, transparent);
+}
+.modal-toolbar > .segmented-tabs button {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 32px;
+  padding: 5px 9px;
+  font-size: 11px;
+}
+.modal-toolbar :is(.interview-person, .inspector-person, .skill-select-row) {
+  padding: 0 0 10px;
+}
+.modal-toolbar :is(.interview-person, .inspector-person) .person-avatar {
+  width: 43px;
+  height: 43px;
+  min-width: 43px;
+}
+.modal-toolbar .interview-person .status-badge {
+  margin-left: auto;
+}
+.modal-log-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.modal-log-toolbar .soft-note {
+  margin: 0;
+}
+.modal-scroll {
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--field-edge) transparent;
+  scroll-padding-block: 12px;
+  overflow-wrap: anywhere;
+}
+.modal-scroll:focus-visible {
+  outline: 1px solid var(--field-focus);
+  outline-offset: -2px;
+}
+.modal
+  .modal-scroll
+  > :is(
+    .modal-body,
+    .settings-content,
+    .skill-editor-content,
+    .inspector-body,
+    .interview-workspace-body,
+    .room-monitor
+  ) {
+  min-height: 0;
+  min-width: 0;
+  padding: var(--modal-inset);
+}
+.modal .modal-scroll :is(.transcript, .event-list, .discord-content) {
+  max-height: none;
+  overflow: visible;
+}
+.modal
+  .modal-scroll
+  :is(.discord-panel, .discord-token-box, .codex-connection-status) {
+  background: color-mix(in srgb, var(--modal-field) 55%, transparent);
+  border-color: var(--modal-rim);
+}
+.modal
+  .modal-scroll
+  :is(
+    select,
+    textarea,
+    input:not([type="checkbox"], [type="range"], [type="radio"])
+  ) {
+  max-width: 100%;
+  background-color: var(--modal-field);
+}
+.modal-toolbar select {
+  background-color: var(--modal-field);
+}
+.modal .modal-action-bar {
+  border-top: 1px solid var(--modal-rim);
+}
+.modal-action-bar :is(.connection-footer, .interview-footer, .form-actions) {
+  margin: 0;
+  border: 0;
+  padding: 10px var(--modal-inset);
+  background: transparent;
+}
+.modal-action-bar .connection-footer > div {
+  flex-wrap: wrap;
+}
+.modal-action-bar .form-actions {
+  justify-content: flex-end;
+}
+
+@media (max-width: 580px) {
+  .modal,
+  .modal.wide {
+    --modal-available: calc(100dvh - 24px);
+    width: calc(100% - 20px);
+    border-radius: 19px;
+  }
+  .modal-toolbar > .segmented-tabs button {
+    padding-inline: 5px;
+    font-size: 10px;
+  }
+  .modal .connection-fields > * {
+    min-width: 0;
+  }
+  .modal .event-list article > * {
+    min-width: 0;
+  }
+}
+@media (max-height: 380px) {
+  .modal[open] {
+    display: block;
+    overflow: auto;
+  }
+  .modal:has(> .modal-toolbar),
+  .modal.discord-preview-dialog {
+    height: auto;
+  }
+  .modal > .modal-heading {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+  }
+  .modal-scroll {
+    overflow: visible;
+  }
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .modal {
+    background-color: var(--bg);
+  }
+}
+@media (forced-colors: active) {
+  .modal {
+    background: Canvas;
+    border-color: CanvasText;
+    backdrop-filter: none;
+  }
+}
